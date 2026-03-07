@@ -54,10 +54,55 @@ public:
 // method: các hàm đi kèm với class/struct
 // Encapsulation : đóng gói 
 
+class SoPhuc {
+private: 
+	float thuc;
+	float ao;
+public: 
+	SoPhuc(float t, float a) {
+		thuc = t;
+		ao = a;
+	}
+	SoPhuc() : SoPhuc(0, 0) {}
+	void nhap() {}
+	void xuat() {}
+	SoPhuc cong(/* SoPhuc a, */SoPhuc b) {
+		SoPhuc kq;
+		kq.thuc = /*a.*/thuc + b.thuc;
+		kq.ao = /*a.*/ao + b.ao;
+		return kq;
+	}
+	SoPhuc tru(SoPhuc b) {
+
+	}
+	SoPhuc nhan(SoPhuc b) {
+
+	}
+	SoPhuc chia(SoPhuc b) {
+
+	}
+
+
+};
+
 class PhanSo {
 private: 
-	float tu;
-	float mau;
+	int tu;
+	int mau;
+
+	int uscln(int a, int b) {
+		while (b != 0) {
+			int t = b;
+			b = a % b;
+			a = t;
+		}
+		return a;
+	}
+	void toiGian() {
+		int tmp = uscln(tu, mau);
+		tu = tu / tmp;
+		mau = mau / tmp;
+	}
 
 public: 
 	void nhap(/*PhanSo& a*/) {
@@ -66,7 +111,7 @@ public:
 	}
 
 	void xuat(/*PhanSo a*/) {
-		cout << "(" << /*a.*/tu << "/" << /*a.*/mau << ")";
+		cout << "(" << /*a.*/tu << "/" << /*a.*/mau << ")" << endl;
 	}
 
 	// constructor 
@@ -103,34 +148,40 @@ public:
 		PhanSo kq;
 		kq.tu = tu * b.tu;
 		kq.mau = mau * b.mau;
+		kq.toiGian();
 		return kq;
+	}
+
+	PhanSo cong(/*PhanSo a,*/PhanSo b) {
+		PhanSo kq;
+		kq.tu = tu * b.mau + mau * b.tu;
+		kq.mau = mau * b.mau;
+		kq.toiGian();
+		return kq;
+	}
+
+	/*
+	* = 0 nếu bằng, -1 nếu a < b, 1 nếu a > b
+	*/
+	int sosanh(/*PhanSo a,*/PhanSo b) {
+		int tmp = tu * b.mau - mau * b.tu;
+		if ((mau > 0 && b.mau > 0) || (mau < 0 && b.mau < 0)) {
+			return tmp == 0 ? 0 : (tmp < 0 ? -1 : 1);
+		} else {
+			return tmp == 0 ? 0 : (tmp < 0 ? 1 : -1);
+		}
 	}
 };
 
-float f2() {
-	return 0;
-}
-
-float f1() {
-	return 1.0f;
-}
-
-float f3() {
-	return 0;
-}
-
 int main(int) {
-
-	int i = 1;
-
-	PhanSo a(2, 3);
+	PhanSo a(7*2, 3*2);
 	PhanSo b(7, 3);
-	
-	PhanSo c = a.nhan(b);
 
-	c.xuat();
+	cout << b.sosanh(a) << endl;
 
-	PhanSo ps[2];
+	//a.nhan(b).xuat();
+	//a.cong(b).xuat();
+
 
 	//Diem diem[10];
 	//Diem p;
