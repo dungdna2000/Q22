@@ -54,6 +54,19 @@ public:
 // method: các hàm đi kèm với class/struct
 // Encapsulation : đóng gói 
 
+class vector2D {
+private: 
+	float x; 
+	float y;
+public: 
+	vector2D(float xx, float yy) {
+		x = xx;
+		y = yy;
+	}
+	vector2D() :vector2D(0, 0) {}
+
+};
+
 class SoPhuc {
 private: 
 	float thuc;
@@ -65,7 +78,9 @@ public:
 	}
 	SoPhuc() : SoPhuc(0, 0) {}
 	void nhap() {}
-	void xuat() {}
+	void xuat() {
+		cout << thuc << " + " << ao << "i" << endl;
+	}
 	SoPhuc cong(/* SoPhuc a, */SoPhuc b) {
 		SoPhuc kq;
 		kq.thuc = /*a.*/thuc + b.thuc;
@@ -73,7 +88,10 @@ public:
 		return kq;
 	}
 	SoPhuc tru(SoPhuc b) {
-
+		SoPhuc kq;
+		kq.thuc = /*a.*/thuc - b.thuc;
+		kq.ao = /*a.*/ao - b.ao;
+		return kq;
 	}
 	SoPhuc nhan(SoPhuc b) {
 
@@ -115,12 +133,12 @@ public:
 	}
 
 	// constructor 
-	PhanSo(/*PhanSo a, */float t, float m) {
+	PhanSo(/*PhanSo a, */int t, int m) {
 		if (m == 0) {
 			cout << "Mau so phai khac khong" << endl;
 			tu = 0;
 			mau = 1;
-			return;
+ 		return;
 		}
 
 		mau = m;
@@ -130,6 +148,8 @@ public:
 	// default constructor 
 	PhanSo():PhanSo(0,1) {
 	}
+
+	PhanSo(int t): PhanSo(t,1) {}
 
 	void setMau(/*PhanSo a, */float m) {
 		if (m == 0) {
@@ -173,10 +193,40 @@ public:
 	}
 };
 
-int main(int) {
-	PhanSo a(7*2, 3*2);
-	PhanSo b(7, 3);
+class PlayingCard {
+private: 
+	int rank;  // 1 = Xì, 2, ... , 10, 11 = Bồi, 12 = Đầm, 13 = Già
+	int suite; // 4 = Cơ, 3 = Rô, 2 = Chuồn , 1 = Bích
+public: 
+	PlayingCard(int r, int s) {
+		rank = r;
+		suite = s;
+	}
+	PlayingCard() : PlayingCard(1, 1) {}
+};
 
+class Deck {
+private: 
+	PlayingCard* cards[52];
+	int count;
+public: 
+	Deck() {
+		int i = 0;
+		for (int r = 1; r<=13; r++)
+			for (int s = 1; s <= 4; s++) {
+				cards[i] = new PlayingCard(r, s);
+				i++;
+			}
+		count = 52;
+	}
+};
+
+int main(int) {
+	//PhanSo a(7*2, 3*2);
+	//PhanSo b(7, 3);
+	PhanSo a(3);
+	PhanSo b(4);
+	
 	cout << b.sosanh(a) << endl;
 
 	//a.nhan(b).xuat();
