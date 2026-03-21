@@ -30,6 +30,7 @@ private:
 	float y;
 public: 
 	Diem(float xx, float yy) {
+		cout << "Diem(" << xx << "," << yy << ")" << endl;
 		x = xx;
 		y = yy;
 	}
@@ -149,7 +150,7 @@ public:
 	PhanSo():PhanSo(0,1) {
 	}
 
-	PhanSo(int t): PhanSo(t,1) {}
+	//PhanSo(int t): PhanSo(t,1) {}
 
 	void setMau(/*PhanSo a, */float m) {
 		if (m == 0) {
@@ -191,7 +192,28 @@ public:
 			return tmp == 0 ? 0 : (tmp < 0 ? 1 : -1);
 		}
 	}
+
+	PhanSo operator+(/*PhanSo trai,*/ PhanSo phai) {
+		return cong(phai);
+	}
+	PhanSo operator+(/*PhanSo trai,*/ float phai) {
+		PhanSo t(phai, 1);
+		return cong(t);
+	}
+
+	friend PhanSo operator+(float trai, PhanSo phai);
 };
+
+PhanSo operator+(float trai, PhanSo phai) {
+	PhanSo t(trai, 1);
+	PhanSo kq;
+	kq.tu = t.tu * phai.mau + t.mau * phai.tu;
+	kq.mau = t.mau * phai.mau;
+	kq.toiGian();
+	return kq;
+
+	//return t.cong(phai);
+}
 
 class PlayingCard {
 private: 
@@ -203,11 +225,20 @@ public:
 		suite = s;
 	}
 	PlayingCard() : PlayingCard(1, 1) {}
+
+	void xuat() {
+
+	}
+
+	// tính điểm 1 lá bài 
+	int getPoint() {
+		return -1;
+	}
 };
 
 class Deck {
 private: 
-	PlayingCard* cards[52];
+	PlayingCard * cards[52];
 	int count;
 public: 
 	Deck() {
@@ -219,67 +250,87 @@ public:
 			}
 		count = 52;
 	}
+
+	void xuat() {
+		for (int i = 0; i < count; i++) {
+			cards[i]->xuat();
+		}
+	}
+
+	PlayingCard* drawOne() {
+		int p = -1; // random from 0 ... count - 1 
+		
+		// swap p and count - 1 
+
+		PlayingCard* c = cards[count - 1];
+		count--;
+		return c;
+	}
 };
 
+void test() {
+	char a[100];
+	int n;
+
+	char b[100];
+	int m;
+
+	int i = n - 1;
+	int j = m - 1;
+	int carry = 0;
+	int sum = 0;
+
+	while (i >= 0 || j >= 0) {
+		int ca = i >= 0 ? a[i] - '0' : 0;
+		int cb = j>=0? b[j] - '0': 0;
+
+		// cong ca , cb , carry 
+		carry = (ca + cb + carry) / 10;
+		sum = (ca + cb + carry) % 10;
+
+
+	}
+
+}
+
+
+class TamGiac {
+private:
+	Diem * pA; 
+	Diem * pB; 
+	Diem * pC; 
+public: 
+	TamGiac(
+		float xA, float yA, 
+		float xB, float yB, 
+		float xC, float yC)
+	{
+		pA = new Diem(xA, yA);
+		pB = new Diem(xB, yB);
+		pC = new Diem(xC, yC);
+	}
+
+	~TamGiac() {
+		delete pA;
+		delete pB;
+		delete pC;
+	}
+};
+
+void f() {
+	TamGiac ABC(3, 3, 6, 2, 1, 0);
+}
+
 int main(int) {
-	//PhanSo a(7*2, 3*2);
-	//PhanSo b(7, 3);
-	PhanSo a(3);
-	PhanSo b(4);
-	
-	cout << b.sosanh(a) << endl;
 
-	//a.nhan(b).xuat();
-	//a.cong(b).xuat();
+	PhanSo a(7*2, 3*2);
+	PhanSo b(7, 3);
+	/*PhanSo c(3);
+	PhanSo d(4);*/
 
+	PhanSo e = 1.5 + a;
 
-	//Diem diem[10];
-	//Diem p;
-	//int n;
-
-	//cout << "Nhap so diem: "; cin >> n;
-
-	//for (int i = 0; i < n; i++) {
-	//	//nhap(diem[i]);
-	//	diem[i].nhap();
-	//}
-	
-	//cout << "Nhap diem P" << endl;
-	//nhap(p);
-	//p.nhap();
-
-	//int min_i = 0;
-	//float min_d = diem[0].khoang_cach_den(p);
-	//for (int i = 1; i < n; i++) {
-	//	float d = diem[i].khoang_cach_den(p);
-	//	if (d < min_d ) {
-	//		min_d = d;
-	//		min_i = i;
-	//	}
-	//}
-
-
-	//int min_i = 0;
-	//int min_j = 1;
-	//float min_d = diem[0].khoang_cach_den(diem[1]);
-
-	//for (int i = 0; i < n - 1; i++) {
-	//	for (int j = i + 1; j < n; j++) {
-	//		float d = diem[i].khoang_cach_den(diem[j]);
-	//		if (d < min_d) {
-	//			min_d = d;
-	//			min_i = i;
-	//			min_j = j;
-	//		}
-	//	}
-	//}
-
-    //cout << "Diem gan voi diem P"; 
-	//xuat(p);
-	//p.xuat();
-	//cout << " nhat la ";
-	//xuat(diem[min_i]); 
-	//diem[min_i].xuat(); 
-
-	cout << endl;
+	//PhanSo t1 = a.cong(b);
+	//PhanSo t2 = t1.cong(c);
+	//PhanSo e = t2.cong(d);
 }
