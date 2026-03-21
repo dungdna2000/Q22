@@ -269,27 +269,27 @@ public:
 };
 
 void test() {
-	char a[100];
-	int n;
+	//char a[100];
+	//int n;
 
-	char b[100];
-	int m;
+	//char b[100];
+	//int m;
 
-	int i = n - 1;
-	int j = m - 1;
-	int carry = 0;
-	int sum = 0;
+	//int i = n - 1;
+	//int j = m - 1;
+	//int carry = 0;
+	//int sum = 0;
 
-	while (i >= 0 || j >= 0) {
-		int ca = i >= 0 ? a[i] - '0' : 0;
-		int cb = j>=0? b[j] - '0': 0;
+	//while (i >= 0 || j >= 0) {
+	//	int ca = i >= 0 ? a[i] - '0' : 0;
+	//	int cb = j>=0? b[j] - '0': 0;
 
-		// cong ca , cb , carry 
-		carry = (ca + cb + carry) / 10;
-		sum = (ca + cb + carry) % 10;
+	//	// cong ca , cb , carry 
+	//	carry = (ca + cb + carry) / 10;
+	//	sum = (ca + cb + carry) % 10;
 
 
-	}
+	//}
 
 }
 
@@ -342,7 +342,7 @@ public:
 		//kq.s = (s + ds) % 60;
 		//kq.m = (m + (s + ds) / 60)%60;
 		//kq.h = 0; //(m + (s + ds) / 60) % 60;
-		//return kq;
+		return kq;
 	}
 	friend CTime operator+(int ds, CTime phai);
 	void xuat() {
@@ -357,17 +357,118 @@ CTime operator+(int ds, CTime phai) {
 }
 
 
+class CDate {
+	int day, month, year;
+
+	int so_ngay_cua_thang(int m, int y) {
+		switch (m) {
+		case 1: return 31; 
+		case 2: 
+			if (year % 4 == 0 && year % 100 != 0) 
+				return 29; 
+			else 
+				return 28;
+		case 3: return 31; 
+		case 4: return 30; 
+		case 5: return 31; 
+		case 6: return 30; 
+		case 7: return 31; 
+		case 8: return 31; 
+		case 9: return 30; 
+		case 10: return 31; 
+		case 11: return 30; 
+		case 12: return 31; 
+
+		}
+	}
+public: 
+	CDate(int d, int m, int y) : day(d), month(m), year(y) {}
+	CDate() : CDate(1, 1, 1980) {}
+
+	CDate operator+(int dd) {
+		CDate kq(day, month, year);
+		int con_lai = dd;
+		while (con_lai > 0) {
+			int so_ngay_thang = so_ngay_cua_thang(kq.month, kq.year);
+			int delta = so_ngay_thang - kq.day;
+			if (con_lai <= delta) {
+				kq.day += con_lai;
+				con_lai = 0;
+			}
+			else { // con_lai > delta
+				kq.day = 1;
+				if (kq.month == 12) { 
+					kq.month = 1;
+					kq.year++; 
+				}
+				else kq.month++;
+
+				con_lai -= delta + 1;
+			}
+			
+		}
+		return kq;
+	}
+
+	friend CDate operator+(int dd, CDate date);
+
+	void xuat() {
+		cout << day << "/" << month << "/" << year;
+	}
+};
+
+CDate operator+(int dd, CDate date) {
+	return date + dd;
+}
+
+class IntStack {
+	int items[1000];
+	int count;
+public: 
+	IntStack() {
+		count = 0;
+	}
+
+	void push(int value) {
+
+	}
+	int pop() {
+
+	}
+	int size() {
+
+	}
+
+	IntStack& operator+(/*IntStack * this, */int value) {
+		push(value);
+		return *this;
+	}
+};
+
 int main(int) {
-	CTime t1(5, 30, 27);
-	CTime t2 = 456 + t1;
-	CTime t3 = t2 + 137;
+
+	 IntStack s;
+	 s.push(5);
+	 cout << s.size() << endl; // ket qua: 1
+	 s.push(6);
+	 s.push(7);
+	 cout << s.pop() + 5 << endl; // ket qua: 12
+	 cout << s.pop() - 5 << endl;  // ket qua: 1
+	 cout << (s + 6).size() << endl;	// ket qua: 2
+
+	//CDate d1(28, 5, 2025);
+	//(d1 + 5).xuat();
+
+	//CTime t1(5, 30, 27);
+	//CTime t2 = 456 + t1;
+	//CTime t3 = t2 + 137;
 
 	//PhanSo a(7*2, 3*2);
 	//PhanSo b(7, 3);
 	/*PhanSo c(3);
 	PhanSo d(4);*/
 
-	PhanSo e = 1.5 + a;
+	//	PhanSo e = 1.5 + a;
 
 	//PhanSo t1 = a.cong(b);
 	//PhanSo t2 = t1.cong(c);
