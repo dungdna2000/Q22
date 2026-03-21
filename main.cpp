@@ -430,13 +430,18 @@ public:
 	}
 
 	void push(int value) {
-
+		items[count] = value;
+		count++;
 	}
 	int pop() {
-
+		if (count > 0) {
+			int it = items[count - 1];
+			count--;
+			return it;
+		}
 	}
 	int size() {
-
+		return count;
 	}
 
 	IntStack& operator+(/*IntStack * this, */int value) {
