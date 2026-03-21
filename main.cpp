@@ -321,10 +321,49 @@ void f() {
 	TamGiac ABC(3, 3, 6, 2, 1, 0);
 }
 
-int main(int) {
+class CTime {
+//private:
+//	int h, m, s;
+	int ss;
+public:
+	CTime(int hh, int mm, int ss) : ss(3600 * hh + 60 * mm + ss) {}
+//	CTime(int hh, int mm, int ss) : h(hh), m(mm), s(ss) {
+		// h = hh;
+		// m = mm;
+		// s = ss;
+//	}
+	CTime() : CTime(0, 0, 0) {}
 
-	PhanSo a(7*2, 3*2);
-	PhanSo b(7, 3);
+	CTime operator+(int ds) {
+		CTime kq;
+		kq.ss += ds;
+
+		//CTime kq;
+		//kq.s = (s + ds) % 60;
+		//kq.m = (m + (s + ds) / 60)%60;
+		//kq.h = 0; //(m + (s + ds) / 60) % 60;
+		//return kq;
+	}
+	friend CTime operator+(int ds, CTime phai);
+	void xuat() {
+		int h = ss / 3600;
+		int m;
+		int s = ss % 60;
+	}
+};
+
+CTime operator+(int ds, CTime phai) {
+	return phai + ds;
+}
+
+
+int main(int) {
+	CTime t1(5, 30, 27);
+	CTime t2 = 456 + t1;
+	CTime t3 = t2 + 137;
+
+	//PhanSo a(7*2, 3*2);
+	//PhanSo b(7, 3);
 	/*PhanSo c(3);
 	PhanSo d(4);*/
 
