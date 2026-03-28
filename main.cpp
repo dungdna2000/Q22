@@ -45,10 +45,25 @@ public:
 		cout << "(" << /*d.*/x << ":" << /*d.*/y << ")";
 	}
 
+	friend ostream& operator<<(ostream &os, Diem& d);
+	friend istream& operator>>(istream& is, Diem& d);
+
 	float khoang_cach_den(/*Diem d1, */ Diem d2) {
 		return sqrt((/*d1.*/x - d2.x) * (/*d1.*/x - d2.x) + (/*d1.*/y - d2.y) * (/*d1.*/y - d2.y));
 	}
 };
+
+ostream& operator<<(ostream &os, Diem& d) {
+	os << "(" << d.x << ":" << d.y << ")";
+	return os;
+}
+
+istream& operator>>(istream& is, Diem& d) {
+	cout << "x: "; is >> d.x;
+	cout << "y: "; is >> d.y;
+	return is;
+}
+
 
 // class : lớp 
 // object : biến 
@@ -450,16 +465,61 @@ public:
 	}
 };
 
+#define N 100
+class Queue {
+	int head, tail, count;
+	int *items;
+	int capacity;
+public: 
+	Queue(int cap) {
+		capacity = cap;
+		items = new int[capacity];
+		head = 0;
+		tail = 0;
+		count = 0;
+	}
+
+	~Queue() {
+		delete items;
+	}
+	bool isEmpty() { return count == 0; }
+
+	void enqueue(int value) {
+		if (count < capacity) {
+			items[tail] = value;
+			tail++;
+			if (tail == capacity) tail = 0;
+			count++;
+		}
+	}
+
+	int dequeue() {
+		if (count > 0) {
+			int it = items[head];
+			head++;
+			if (head == capacity) head = 0;
+			count--;
+			return it;
+		}
+	}
+
+};
+
 int main(int) {
 
-	 IntStack s;
-	 s.push(5);
-	 cout << s.size() << endl; // ket qua: 1
-	 s.push(6);
-	 s.push(7);
-	 cout << s.pop() + 5 << endl; // ket qua: 12
-	 cout << s.pop() - 5 << endl;  // ket qua: 1
-	 cout << (s + 6).size() << endl;	// ket qua: 2
+	Diem d(5, 6);
+	cout << "Nhap gia tri diem d" << endl;
+	cin >> d;
+	cout << "d: " << d << endl;
+
+	 //IntStack s;
+	 //s.push(5);
+	 //cout << s.size() << endl; // ket qua: 1
+	 //s.push(6);
+	 //s.push(7);
+	 //cout << s.pop() + 5 << endl; // ket qua: 12
+	 //cout << s.pop() - 5 << endl;  // ket qua: 1
+	 //cout << (s + 6).size() << endl;	// ket qua: 2
 
 	//CDate d1(28, 5, 2025);
 	//(d1 + 5).xuat();
