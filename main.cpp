@@ -430,6 +430,18 @@ public:
 	void xuat() {
 		cout << day << "/" << month << "/" << year;
 	}
+
+	int soNgayTrongThang() {
+		return -1;
+	}
+
+	CDate ngayDauThang() {
+		return CDate(year, month, 1);
+	}
+
+	int getThu() {
+		return -1;
+	}
 };
 
 CDate operator+(int dd, CDate date) {
@@ -505,12 +517,34 @@ public:
 
 };
 
-int main(int) {
+void InLich(CDate d) {
+	cout << " Su Mo Tu We Th Fr Sa" << endl;
+	int thuNgay1 = d.ngayDauThang().getThu();
+	int i = -2; // ? 
+	int ngayCuoiThang = d.soNgayTrongThang();
 
-	Diem d(5, 6);
-	cout << "Nhap gia tri diem d" << endl;
-	cin >> d;
-	cout << "d: " << d << endl;
+	for (int r = 0; r < 6; r++) {
+		for (int c = 0; c < 7; c++) {
+			if (i > ngayCuoiThang || i<=0)
+				cout << " . ";
+			else 
+			if (i<10)
+				cout << "  " << i;
+			else 
+				cout << " " << i;
+			i++;
+		}
+		cout << endl;
+	}
+}
+
+int main(int) {
+	InLich(CDate(2025,05,03));
+
+	//Diem d(5, 6);
+	//cout << "Nhap gia tri diem d" << endl;
+	//cin >> d;
+	//cout << "d: " << d << endl;
 
 	 //IntStack s;
 	 //s.push(5);
