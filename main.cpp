@@ -1,28 +1,6 @@
 ﻿#include <iostream>
 using namespace std;
 
-// struct VongTron
-class VongTron {
-public: 
-	float x;
-	float y;
-	float r;
-
-	void nhap(/*VongTron& d*/) {
-		cout << "x: "; cin >> /*d.*/x;
-		cout << "y: "; cin >> /*d.*/y;
-		cout << "r: "; cin >> /*d.*/r;
-	}
-
-	void xuat(/*VongTron d*/) {
-		cout << "(" << /*d.*/x << ":" << /*d.*/y << "," << r << ")";
-	}
-
-	float dien_tich(/*VongTron v */) {
-		return 3.14 * r * r;
-	}
-
-};
 
 class Diem {
 private: 
@@ -419,8 +397,7 @@ public:
 				else kq.month++;
 
 				con_lai -= delta + 1;
-			}
-			
+			}	
 		}
 		return kq;
 	}
@@ -538,38 +515,112 @@ void InLich(CDate d) {
 	}
 }
 
+class VongTron {
+protected: 
+	float x;
+	float y;
+	float r;
+public: 
+	VongTron(float xx, float yy, float rr) {
+		x = xx;
+		y = yy;
+		r = rr;
+	}
+
+	VongTron():VongTron(0,0,1) {}
+
+	void nhap(/*VongTron& d*/) {
+		cout << "VongTron::nhap()" << endl;
+		cout << "x: "; cin >> /*d.*/x;
+		cout << "y: "; cin >> /*d.*/y;
+		cout << "r: "; cin >> /*d.*/r;
+	}
+
+	void xuat(/*VongTron d*/) {
+		cout << "(" << /*d.*/x << ":" << /*d.*/y << "," << r << ")";
+	}
+
+	float dien_tich(/*VongTron v */) {
+		return 3.14 * r * r;
+	}
+};
+
+class HinhChuNhat {
+protected:
+	float dai;
+	float rong;
+public:
+	HinhChuNhat(float d, float r) {
+		dai = d;
+		rong = r;
+	}
+
+	HinhChuNhat() :HinhChuNhat(1, 2) {}
+
+	void nhap() {
+		cout << "HinhChuNhat::nhap()" << endl;
+		cout << "Dai : "; cin >> dai;
+		cout << "Rong : "; cin >> rong;
+	}
+
+	void xuat() {
+		cout << "(" << dai << ":" << rong << "," << ")";
+	}
+
+	float dien_tich() {
+		return dai * rong;
+	}
+};
+
+class HinhVuong : HinhChuNhat {
+public: 
+	HinhVuong(float canh):HinhChuNhat(/*d=*/canh,/*r=*/canh) {}
+	HinhVuong(): HinhVuong(1) {}
+	void nhap() {
+		float d;
+		cout << "Chieu dai canh: "; cin >> d;
+		dai = d;
+		rong = d;
+	}
+	void xuat() {
+		cout << "(" << dai << ":" << ")";
+	}
+};
+
+
+// VongTron : parent class | super class
+// Elipse : sub-class | child class
+
+class Elipse : public VongTron {
+public: 
+	float r2;
+
+	Elipse(float xx, float yy, float rr, float rr2): VongTron(xx,yy,r) {
+		r2 = rr2;
+	}
+
+	Elipse(): Elipse(0,0,1,1) {}
+
+	// override 
+	void nhap() {
+		cout << "Elipse::nhap()" << endl;
+		VongTron::nhap();
+		cout << "r2: "; cin >> r2;
+	}
+
+	void xuat() {
+		cout << "(" << x << ":" << y << "," << r << "," << r2 << ")";
+	}
+
+	float dien_tich() {
+		return 3.14 * r * r2;
+	}
+};
+
+
 int main(int) {
-	InLich(CDate(2025,05,03));
-
-	//Diem d(5, 6);
-	//cout << "Nhap gia tri diem d" << endl;
-	//cin >> d;
-	//cout << "d: " << d << endl;
-
-	 //IntStack s;
-	 //s.push(5);
-	 //cout << s.size() << endl; // ket qua: 1
-	 //s.push(6);
-	 //s.push(7);
-	 //cout << s.pop() + 5 << endl; // ket qua: 12
-	 //cout << s.pop() - 5 << endl;  // ket qua: 1
-	 //cout << (s + 6).size() << endl;	// ket qua: 2
-
-	//CDate d1(28, 5, 2025);
-	//(d1 + 5).xuat();
-
-	//CTime t1(5, 30, 27);
-	//CTime t2 = 456 + t1;
-	//CTime t3 = t2 + 137;
-
-	//PhanSo a(7*2, 3*2);
-	//PhanSo b(7, 3);
-	/*PhanSo c(3);
-	PhanSo d(4);*/
-
-	//	PhanSo e = 1.5 + a;
-
-	//PhanSo t1 = a.cong(b);
-	//PhanSo t2 = t1.cong(c);
-	//PhanSo e = t2.cong(d);
+	Elipse e; 
+//	e.nhap();
+	e.xuat();
+	cout << "Dien tich: " << e.dien_tich() << endl;
 }
