@@ -618,6 +618,47 @@ public:
 };
 
 
+class NhanVien {
+protected:
+	int MSNV;
+	string HoTen;
+	string NgaySinh;
+public: 
+	NhanVien(int msnv, string ht, string ns) {
+		MSNV = msnv;
+		HoTen = ht;
+		NgaySinh = ns;
+	}
+	void nhap() {
+
+	}
+
+	void xuat() {
+
+	}
+};
+
+class NVSanXuat : public NhanVien {
+protected: 
+	int LuongCanBan;
+	int SoSanPham;
+public: 
+	NVSanXuat(int msnv, string ht, string ns, int lcb, int ssp) :
+		NhanVien(msnv, ht, ns) {
+		LuongCanBan = lcb;
+		SoSanPham = ssp;
+	}
+	void nhap() {
+		NhanVien::nhap();
+		cout << "Luong can ban: "; cin >> LuongCanBan;
+		cout << "So san pham: "; cin >> SoSanPham;
+	}
+	int luong() {
+		return LuongCanBan + SoSanPham * 5000;
+	}
+};
+
+
 int main(int) {
 	Elipse e; 
 //	e.nhap();
